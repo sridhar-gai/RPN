@@ -75,7 +75,7 @@ class TestDataProvider(object):
         test_data.append(("5,1,2,+,4,*,+,3,-", 14))
         test_data.append(("2,3,+", 5))
         # error
-        test_data.append(("2,+", ERROR))
+        test_data.append(("2,+", 2))
         test_data.append(("*,+", ERROR))
         test_data.append(("2,3,+,-", ERROR))
         test_data.append(("1,2,3.4", ERROR))
