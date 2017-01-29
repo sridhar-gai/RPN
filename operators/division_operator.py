@@ -7,6 +7,4 @@ class DivisionOperator(Operator):
 
     def operate(self, *args):
         result = float(args[0]) / args[1]
-        if not result - int(result):
-            result = int(result)
-        return result
+        return int(result) if not result - int(result) else result
