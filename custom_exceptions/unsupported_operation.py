@@ -1,2 +1,0 @@
-class UnSupportedOperationForDataType(Exception):
-    pass

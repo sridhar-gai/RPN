@@ -1,0 +1,62 @@
+{% extends "base-template.html" %}
+{% block title %}RPN Calculator{% endblock title%}
+{% block body %}
+<form id="rpn-form" class="form-horizontal" action="" method="post">
+    {% csrf_token %}
+    <div id="exp-container" class="form-group">
+        <label class="col-xs-3 control-label" for="expression">RPN Expression</label>
+        <div class="col-xs-5">
+            <input type="text" name="expression" class="form-control" id="expression"
+                   placeholder="Enter a RPN expression">
+            <span class="help-block">{{help_text}}</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-3 control-label" for="result">Result</label>
+        <div class="col-xs-5" id="result-container">
+            <input type="text" name="result" readonly="readonly" class="form-control" id="result">
+        </div>
+    </div>
+    <div class="col-lg-8">
+        <div class="row" style="text-align:right">
+            <div class="col-xs-8">
+                <input name="evaluate" type="button" class="btn btn-primary" value="Evaluate"/>
+            </div>
+        </div>
+    </div>
+    </div>
+
+</form>
+
+{% endblock body %}
+{% block page_scripts %}
+<script type="text/javascript">
+$(document).ready(function() {
+    $('.btn').on('click', function() {
+        var csrf_token = '{{ csrf_token }}'
+        var payload = {
+            csrfmiddlewaretoken: csrf_token,
+            expression: $('#expression').val()
+        }
+        $.post("/calculate/", payload, function(data) {
+            var result_div = $('#result')
+            result_div.val('')
+            if (data.has_errors) {
+                result_div.parent().addClass('error')
+
+            } else {
+                result_div.parent().removeClass('error')
+
+            }
+            result_div.val(data.result)
+            if (!data.is_expression_valid) {
+                $('#exp-container').addClass('has-error')
+            } else {
+                $('#exp-container').removeClass('has-error')
+            }
+        });
+    });
+});
+
+</script>
+{% endblock page_scripts %}
