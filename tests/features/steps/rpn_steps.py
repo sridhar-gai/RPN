@@ -10,7 +10,7 @@ driver = webdriver.Firefox()
 
 @given(u'I have entered "{expression}"')
 def step_impl(context, expression):
-    driver.get("http://csd-team.co.in:8000/calculate/")
+    driver.get("http://localhost:8000/calculate/")
     elem = driver.find_element_by_name("expression")
     elem.send_keys(expression)
 
